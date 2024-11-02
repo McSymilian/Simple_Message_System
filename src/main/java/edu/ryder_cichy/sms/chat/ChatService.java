@@ -10,7 +10,7 @@ import java.util.List;
 public class ChatService {
     private MessagesRepository messagesRepository;
 
-    public List<ChatMessage> findAllMessagesByReceiverUUID() {
+    public List<ChatMessage> findAllMessages() {
         return messagesRepository.findAll()
                 .stream()
                 .map(it ->

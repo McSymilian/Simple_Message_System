@@ -21,7 +21,7 @@ public class ChatController {
 
     @GetMapping("chat_history")
     public List<ChatMessage> getChatHistory() {
-        return chatService.findAllMessagesByReceiverUUID();
+        return chatService.findAllMessages();
     }
 
 }
