@@ -9,4 +9,4 @@ SMS is fullstack application, with Java + Spring on the backend and HTML + CSS +
 - And many depedencies listed [here](build.gradle)
 
 ## UML Chart
-![sms-uml](https://github.com/user-attachments/assets/54b772e7-a853-42ec-b289-bee648a41e67)
+![sms-uml (1)](https://github.com/user-attachments/assets/10fdd3d0-0c0c-411f-a275-4a26c3428028)
