@@ -38,4 +38,11 @@ public class UserService {
     public ResponseEntity<String> userExistsHandling() {
         return ResponseEntity.badRequest().body("Given username is already taken");
     }
+
+    public ResponseEntity<String> getUsernameByUuid(String uuid) {
+        return ResponseEntity.ok(userRepository.findById(uuid)
+                .orElseThrow(NoSuchUserException::new)
+                .getUsername()
+        );
+    }
 }
