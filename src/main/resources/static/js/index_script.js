@@ -56,7 +56,6 @@ document.getElementById('register-form').addEventListener('submit', async functi
 
         // Handle the response
         if (response.ok) {
-            const data = await response.text(); // Assuming the back-end returns a plain string
             Swal.fire({
                 icon: 'success',
                 title: 'Registration successful',
