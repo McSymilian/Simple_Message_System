@@ -1,12 +1,9 @@
-// Login User
-document.getElementById('login-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
+const signInUrl = 'http://localhost:6942/signIn';
+const signUpUrl = 'http://localhost:6942/signUp';
 
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
-
+async function signIn(username, password) {
     try {
-        const response = await fetch('http://localhost:6942/signIn', {
+        const response = await fetch(signInUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,16 +11,9 @@ document.getElementById('login-form').addEventListener('submit', async function(
             body: JSON.stringify({username, password}),
         });
 
-        // Handle the response
         if (response.ok) {
-            const data = await response.text(); // Assuming the back-end returns a plain string
-            Swal.fire({
-                icon: 'success',
-                title: 'Login successful',
-                text: 'Redirecting to dashboard...',
-            }).then(() => {
-                window.location.href = `/dashboard?uuid=${data}`;
-            });
+            const data = await response.text();
+            window.location.href = `/dashboard?uuid=${data}`;
         } else {
             const errorMessage = await response.text();
             Swal.fire({
@@ -36,17 +26,15 @@ document.getElementById('login-form').addEventListener('submit', async function(
     } catch (error) {
         console.error('Error during login request:', error);
     }
-});
+}
 
-// Register User
-document.getElementById('register-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
 
+async function signUp() {
     const username = document.getElementById('register-username').value;
     const password = document.getElementById('register-password').value;
 
     try {
-        const response = await fetch('http://localhost:6942/signUp', {
+        const response = await fetch(signUpUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,12 +42,13 @@ document.getElementById('register-form').addEventListener('submit', async functi
             body: JSON.stringify({username, password}),
         });
 
-        // Handle the response
         if (response.ok) {
             Swal.fire({
                 icon: 'success',
                 title: 'Registration successful',
                 text: 'Now you can login!',
+            }).then(() => {
+                signIn(username, password);
             });
         } else {
             const errorMessage = await response.text();
@@ -73,4 +62,24 @@ document.getElementById('register-form').addEventListener('submit', async functi
     } catch (error) {
         console.error('Error during registration request:', error);
     }
-});
+}
+
+
+// Login User
+document.getElementById('login-form')
+    .addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        await signIn(username, password);
+    });
+
+// Register User
+document.getElementById('register-form')
+    .addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        await signUp();
+    });
