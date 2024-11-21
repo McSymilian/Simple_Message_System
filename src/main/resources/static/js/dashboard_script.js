@@ -78,7 +78,7 @@ if (uuid) {
             for (const message of chat_history) {
                 const name = message.senderUUID === uuid ? 'You' : await getUsernameByUUID(message.senderUUID);
 
-                timestamp = getEnhancedTimestamp(new Date(message.timestamp));
+                const timestamp = getEnhancedTimestamp(new Date(message.timestamp));
 
                 addMessage(name, message.content, timestamp);
             }
