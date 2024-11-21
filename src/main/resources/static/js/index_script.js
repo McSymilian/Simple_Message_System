@@ -29,10 +29,7 @@ async function signIn(username, password) {
 }
 
 
-async function signUp() {
-    const username = document.getElementById('register-username').value;
-    const password = document.getElementById('register-password').value;
-
+async function signUp(username, password) {
     try {
         const response = await fetch(signUpUrl, {
             method: 'POST',
@@ -57,7 +54,6 @@ async function signUp() {
                 title: 'Registration failed',
                 text: errorMessage,
             });
-            console.error('Registration failed:', response.status, response.statusText);
         }
     } catch (error) {
         console.error('Error during registration request:', error);
@@ -81,5 +77,17 @@ document.getElementById('register-form')
     .addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        await signUp();
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        const confirm_password = document.getElementById('register-confirm-password').value;
+
+        if (password !== confirm_password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration failed',
+                text: 'Passwords do not match',
+            });
+        } else {
+            await signUp(username, password);
+        }
     });
