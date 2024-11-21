@@ -31,6 +31,26 @@ if (uuid) {
         messageContainer.appendChild(messageElement);
     }
 
+    function getEnhancedTimestamp(message_date) {
+        const elapsed = (new Date() - message_date)
+        let timestamp;
+
+        if (elapsed > 86_400_000) { // older than 24 hours
+            timestamp = (message_date).toLocaleString();
+        } else if (elapsed > 900_000) { // older 15 minutes
+            const hours = String(message_date.getHours()).padStart(2, '0');
+            const minutes = String(message_date.getMinutes()).padStart(2, '0');
+
+            timestamp = message_date.toDateString() + ' ' + `${hours}:${minutes}`;
+        } else if (elapsed > 60_000) { // older than 1 minute
+            timestamp = `${Math.floor(elapsed / 60_000)} minutes ago`;
+        } else {
+            timestamp = 'Just now';
+        }
+
+        return timestamp;
+    }
+
     async function getUsernameByUUID(uuid) {
         const response = await fetch(`http://localhost:6942/getUsername?uuid=${uuid}`, {
             method: 'GET',
@@ -45,9 +65,7 @@ if (uuid) {
     }
 
 
-    document.addEventListener('DOMContentLoaded', async function(event) {
-        event.preventDefault();
-
+    document.addEventListener('DOMContentLoaded', async function() {
         const response = await fetch('http://localhost:6942/chat_history', {
             method: 'GET',
             headers: {
@@ -59,7 +77,10 @@ if (uuid) {
             const chat_history = await response.json();
             for (const message of chat_history) {
                 const name = message.senderUUID === uuid ? 'You' : await getUsernameByUUID(message.senderUUID);
-                addMessage(name, message.content, message.timestamp);
+
+                timestamp = getEnhancedTimestamp(new Date(message.timestamp));
+
+                addMessage(name, message.content, timestamp);
             }
         }
 
@@ -93,7 +114,7 @@ if (uuid) {
 
             stompClient.send('/app/messages', {}, JSON.stringify(chatMessage));
 
-            addMessage('You', input_content, new Date().toISOString());
+            addMessage('You', input_content, getEnhancedTimestamp(new Date()));
 
             document.getElementById('message-input').value = '';
         });
