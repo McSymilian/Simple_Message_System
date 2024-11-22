@@ -1,11 +1,11 @@
 const uuid = new URLSearchParams(window.location.search).get('uuid');
 
 if (uuid) {
-    function addMessage(sender, content, timestamp) {
+    function addMessage(sender, content, timestamp, sentByMe) {
         const messageContainer = document.getElementById('chat-messages');
 
         const messageElement = document.createElement('div');
-        messageElement.className = 'message';
+        sentByMe ? messageElement.className = 'message message-sent' : messageElement.className = 'message message-received';
 
         const messageHeader = document.createElement('div');
         messageHeader.className = 'message-header';
@@ -76,11 +76,13 @@ if (uuid) {
         if (response.ok) {
             const chat_history = await response.json();
             for (const message of chat_history) {
-                const name = message.senderUUID === uuid ? 'You' : await getUsernameByUUID(message.senderUUID);
-
                 const timestamp = getEnhancedTimestamp(new Date(message.timestamp));
 
-                addMessage(name, message.content, timestamp);
+                if (message.senderUUID === uuid) {
+                    addMessage('You', message.content, timestamp, true);
+                } else {
+                    addMessage(await getUsernameByUUID(message.senderUUID), message.content, timestamp, false);
+                }
             }
         }
 
@@ -114,7 +116,7 @@ if (uuid) {
 
             stompClient.send('/app/messages', {}, JSON.stringify(chatMessage));
 
-            addMessage('You', input_content, getEnhancedTimestamp(new Date()));
+            addMessage('You', input_content, getEnhancedTimestamp(new Date()), true);
 
             document.getElementById('message-input').value = '';
         });
