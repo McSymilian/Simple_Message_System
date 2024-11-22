@@ -31,6 +31,12 @@ if (uuid) {
         messageContainer.appendChild(messageElement);
     }
 
+    function scrollToBottom() {
+        const chat_messages = document.getElementById('chat-messages');
+        chat_messages.scrollTop = chat_messages.scrollHeight;
+    }
+
+
     function getEnhancedTimestamp(message_date) {
         const elapsed = (new Date() - message_date)
         let timestamp;
@@ -84,6 +90,7 @@ if (uuid) {
                     addMessage(await getUsernameByUUID(message.senderUUID), message.content, timestamp, false);
                 }
             }
+            scrollToBottom();
         }
 
         const socket = new SockJS('/sms_ws');
@@ -119,8 +126,11 @@ if (uuid) {
             addMessage('You', input_content, getEnhancedTimestamp(new Date()), true);
 
             document.getElementById('message-input').value = '';
+            scrollToBottom();
         });
     });
+
+
 
 
 
