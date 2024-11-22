@@ -103,7 +103,7 @@ if (uuid) {
                 const message = JSON.parse(messageOutput.body);
                 if (message.senderUUID !== uuid) {
                     const name = await getUsernameByUUID(message.senderUUID);
-                    addMessage(name, message.content, message.timestamp);
+                    addMessage(name, message.content, getEnhancedTimestamp(message.timestamp));
                 }
             }, function(error) {
                 console.error("Subscription error: " + error);
@@ -114,19 +114,20 @@ if (uuid) {
             event.preventDefault();
 
             const input_content = document.getElementById('message-input').value;
+            if (input_content) {
+                const chatMessage = {
+                    senderUUID: uuid,
+                    content: input_content,
+                    timestamp: new Date().toISOString()
+                };
 
-            const chatMessage = {
-                senderUUID: uuid,
-                content: input_content,
-                timestamp: new Date().toISOString()
-            };
+                stompClient.send('/app/messages', {}, JSON.stringify(chatMessage));
 
-            stompClient.send('/app/messages', {}, JSON.stringify(chatMessage));
+                addMessage('You', input_content, getEnhancedTimestamp(new Date()), true);
 
-            addMessage('You', input_content, getEnhancedTimestamp(new Date()), true);
-
-            document.getElementById('message-input').value = '';
-            scrollToBottom();
+                document.getElementById('message-input').value = '';
+                scrollToBottom();
+            }
         });
     });
 
