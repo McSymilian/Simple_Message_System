@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WebSiteController {
     @GetMapping("home")
     public String home() {
-        return "index";
+        return "new";
     }
 
     @GetMapping("dashboard")

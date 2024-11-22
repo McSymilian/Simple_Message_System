@@ -153,33 +153,118 @@ async function signUp(username, password) {
 }
 
 
-// Login User
-document.getElementsByClassName('login100-form validate-form')[0]
-    .addEventListener('submit', async function(event) {
-        event.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    function attachLoginEventListener() {
+        document.getElementById('login-form')
+            .addEventListener('submit', async function (event) {
+                event.preventDefault();
 
-        const username = document.getElementsByClassName('input100')[0].value;
-        const password = document.getElementsByClassName('input100')[1].value;
+                const username = document.getElementsByClassName('input100')[0].value;
+                const password = document.getElementsByClassName('input100')[1].value;
 
-        await signIn(username, password);
-    });
+                await signIn(username, password);
+            });
+    }
 
-// Register User
-// document.getElementById('register-form')
-//     .addEventListener('submit', async function(event) {
-//         event.preventDefault();
-//
-//         const username = document.getElementById('register-username').value;
-//         const password = document.getElementById('register-password').value;
-//         const confirm_password = document.getElementById('register-confirm-password').value;
-//
-//         if (password !== confirm_password) {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Registration failed',
-//                 text: 'Passwords do not match',
-//             });
-//         } else {
-//             await signUp(username, password);
-//         }
-//     });
+    function attachRegisterEventListener() {
+        document.getElementById('register-form')
+            .addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const username = document.getElementsByClassName('input100')[0].value;
+                const password = document.getElementsByClassName('input100')[1].value;
+                const confirm_password = document.getElementsByClassName('input100')[2].value;
+
+                if (password !== confirm_password) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Registration failed',
+                        text: 'Passwords do not match',
+                    });
+                } else {
+                    await signUp(username, password);
+                }
+            });
+    }
+
+    let loginFormInnerHtml = document.querySelector('.wrap-login100').innerHTML;
+
+    function attachChangeToRegisterFormEventListener() {
+        document.getElementById('signUpLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            switchToRegisterForm();
+        });
+    }
+
+    function attachChangeToLoginFormEventListener() {
+        document.getElementById('loginLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            switchToLoginForm();
+        });
+    }
+
+    function switchToRegisterForm() {
+        const form = document.querySelector('.wrap-login100');
+        form.innerHTML = `
+            <form class="login100-form validate-form" id="register-form">
+                <span class="login100-form-title p-b-26">
+                    Register
+                </span>
+                <span class="login100-form-title p-b-48">
+                    <i class="zmdi zmdi-cloud-outline"></i>
+                </span>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter username">
+                    <input class="input100" type="text" name="username">
+                    <span class="focus-input100" data-placeholder="Username"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <span class="btn-show-pass">
+                        <i class="zmdi zmdi-eye"></i>
+                    </span>
+                    <input class="input100" type="password" name="pass">
+                    <span class="focus-input100" data-placeholder="Password"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Confirm password">
+                    <span class="btn-show-pass">
+                        <i class="zmdi zmdi-eye"></i>
+                    </span>
+                    <input class="input100" type="password" name="confirm-pass">
+                    <span class="focus-input100" data-placeholder="Confirm Password"></span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button type="submit" class="login100-form-btn">
+                            Register
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center p-t-50">
+                    <span class="txt1">
+                        Already have an account?
+                    </span>
+                    <a class="txt2" href="" id="loginLink">
+                        Login
+                    </a>
+                </div>
+            </form>
+        `;
+        attachRegisterEventListener();
+    }
+
+
+    function switchToLoginForm() {
+        const form = document.querySelector('.wrap-login100');
+        form.innerHTML = loginFormInnerHtml;
+        attachChangeToLoginFormEventListener();
+        attachLoginEventListener();
+    }
+
+    attachChangeToRegisterFormEventListener();
+    attachLoginEventListener();
+});
