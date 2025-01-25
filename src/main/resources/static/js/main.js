@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </form>
         `;
+        attachChangeToLoginFormEventListener();
         attachRegisterEventListener();
     }
 
@@ -261,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function switchToLoginForm() {
         const form = document.querySelector('.wrap-login100');
         form.innerHTML = loginFormInnerHtml;
-        attachChangeToLoginFormEventListener();
+        attachChangeToRegisterFormEventListener();
         attachLoginEventListener();
     }
 
