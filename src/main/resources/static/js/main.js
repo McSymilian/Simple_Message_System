@@ -205,58 +205,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function switchToRegisterForm() {
         const form = document.querySelector('.wrap-login100');
-        form.innerHTML = `
-            <form class="login100-form validate-form" id="register-form">
-                <span class="login100-form-title p-b-26">
-                    Register
-                </span>
-                <span class="login100-form-title p-b-48">
-                    <i class="zmdi zmdi-cloud-outline"></i>
-                </span>
+        fetch('registerForm.html')
+            .then(response => response.text())
+            .then(html => {
+                form.innerHTML = html;
+                attachChangeToLoginFormEventListener();
+                attachRegisterEventListener();
+                attachInputValidation(jQuery);
+            }).catch(error => {
+                console.error('Error during fetching register form:', error)
+            });
 
-                <div class="wrap-input100 validate-input" data-validate="Enter username">
-                    <input class="input100" type="text" name="username">
-                    <span class="focus-input100" data-placeholder="Username"></span>
-                </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye"></i>
-                    </span>
-                    <input class="input100" type="password" name="pass">
-                    <span class="focus-input100" data-placeholder="Password"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Confirm password">
-                    <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye"></i>
-                    </span>
-                    <input class="input100" type="password" name="confirm-pass">
-                    <span class="focus-input100" data-placeholder="Confirm Password"></span>
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn">
-                            Register
-                        </button>
-                    </div>
-                </div>
-
-                <div class="text-center p-t-50">
-                    <span class="txt1">
-                        Already have an account?
-                    </span>
-                    <a class="txt2" href="" id="loginLink">
-                        Login
-                    </a>
-                </div>
-            </form>
-        `;
-        attachChangeToLoginFormEventListener();
-        attachRegisterEventListener();
-        attachInputValidation(jQuery);
     }
 
 
