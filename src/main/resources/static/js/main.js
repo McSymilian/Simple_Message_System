@@ -1,5 +1,5 @@
 
-(function ($) {
+function attachInputValidation($) {
     "use strict";
 
 
@@ -86,7 +86,7 @@
     });
 
 
-})(jQuery);
+}
 
 
 
@@ -256,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         attachChangeToLoginFormEventListener();
         attachRegisterEventListener();
+        attachInputValidation(jQuery);
     }
 
 
@@ -264,8 +265,11 @@ document.addEventListener('DOMContentLoaded', function() {
         form.innerHTML = loginFormInnerHtml;
         attachChangeToRegisterFormEventListener();
         attachLoginEventListener();
+        attachInputValidation(jQuery);
+
     }
 
     attachChangeToRegisterFormEventListener();
     attachLoginEventListener();
+    attachInputValidation(jQuery);
 });
