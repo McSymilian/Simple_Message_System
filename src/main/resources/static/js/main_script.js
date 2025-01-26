@@ -2,9 +2,7 @@
 function attachInputValidation($) {
     "use strict";
 
-
-    /*==================================================================
-    [ Focus input ]*/
+    // Focus view and raise label if input is not empty
     $('.input100').each(function(){
         $(this).on('blur', function(){
             if($(this).val().trim() != "") {
@@ -17,8 +15,7 @@ function attachInputValidation($) {
     })
   
   
-    /*==================================================================
-    [ Validate ]*/
+    // Validate input
     var input = $('.validate-input .input100');
 
     // $('.validate-form').on('submit',function(){
@@ -66,8 +63,7 @@ function attachInputValidation($) {
         $(thisAlert).removeClass('alert-validate');
     }
     
-    /*==================================================================
-    [ Show pass ]*/
+    // Show or hide password
     var showPass = 0;
     $('.btn-show-pass').on('click', function(){
         if(showPass == 0) {
@@ -88,11 +84,11 @@ function attachInputValidation($) {
 
 }
 
-
-
+// Url endpoints
 const signInUrl = 'http://localhost:6942/signIn';
 const signUpUrl = 'http://localhost:6942/signUp';
 
+// User sign in function
 async function signIn(username, password) {
     try {
         const response = await fetch(signInUrl, {
@@ -120,7 +116,7 @@ async function signIn(username, password) {
     }
 }
 
-
+// User sign up function
 async function signUp(username, password) {
     try {
         const response = await fetch(signUpUrl, {
@@ -153,7 +149,9 @@ async function signUp(username, password) {
 }
 
 
+// When page is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Attach login event listener to submit button
     function attachLoginEventListener() {
         document.getElementById('login-form')
             .addEventListener('submit', async function (event) {
@@ -166,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Attach register event listener to submit button
     function attachRegisterEventListener() {
         document.getElementById('register-form')
             .addEventListener('submit', async function (event) {
@@ -189,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let loginFormInnerHtml = document.querySelector('.wrap-login100').innerHTML;
 
+    // Attach event listener to switch to register form
     function attachChangeToRegisterFormEventListener() {
         document.getElementById('signUpLink').addEventListener('click', function (event) {
             event.preventDefault();
@@ -196,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Attach event listener to switch to login form
     function attachChangeToLoginFormEventListener() {
         document.getElementById('loginLink').addEventListener('click', function(event) {
             event.preventDefault();
@@ -203,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Change document content to register form and attach listeners
     function switchToRegisterForm() {
         const form = document.querySelector('.wrap-login100');
         fetch('registerForm.html')
@@ -219,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-
+    // Change (back) document content to login form and attach listeners
     function switchToLoginForm() {
         const form = document.querySelector('.wrap-login100');
         form.innerHTML = loginFormInnerHtml;
@@ -229,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
+    // When page is loaded attach listeners
     attachChangeToRegisterFormEventListener();
     attachLoginEventListener();
     attachInputValidation(jQuery);

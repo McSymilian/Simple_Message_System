@@ -1,6 +1,8 @@
+// Extract user uuid from url
 const uuid = new URLSearchParams(window.location.search).get('uuid');
 
 if (uuid) {
+    // Add and display message in chat
     function addMessage(sender, content, timestamp, sentByMe) {
         const messageContainer = document.getElementById('chat-messages');
 
@@ -31,12 +33,14 @@ if (uuid) {
         messageContainer.appendChild(messageElement);
     }
 
+    // Scroll to bottom of chat
     function scrollToBottom() {
         const chat_messages = document.getElementById('chat-messages');
         chat_messages.scrollTop = chat_messages.scrollHeight;
     }
 
 
+    // Get precise timestamp of message
     function getEnhancedTimestamp(message_date) {
         const elapsed = (new Date() - message_date)
         let timestamp;
@@ -57,6 +61,7 @@ if (uuid) {
         return timestamp;
     }
 
+    // Fetch username by uuid
     async function getUsernameByUUID(uuid) {
         const response = await fetch(`http://localhost:6942/getUsername?uuid=${uuid}`, {
             method: 'GET',
@@ -71,6 +76,7 @@ if (uuid) {
     }
 
 
+    // Fetch chat history for given uuid and connect to websocket
     document.addEventListener('DOMContentLoaded', async function() {
         const response = await fetch('http://localhost:6942/chat_history', {
             method: 'GET',
@@ -110,6 +116,7 @@ if (uuid) {
             });
         });
 
+        // Submit and send message
         document.getElementsByClassName('chat-input')[0].addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -131,10 +138,7 @@ if (uuid) {
         });
     });
 
-
-
-
-
+    // Redirect to 404 if not found user
 } else {
     window.location.href = '/404';
 }
