@@ -1,14 +1,7 @@
-import {attachInputValidation} from './inputValidation.js';
-import {
-    attachChangeToRegisterFormEventListener,
-    attachLoginEventListener,}
-    from './attachListener.js';
-
+import {switchToLoginForm} from "./switchForm.js";
 
 // When page is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Attach starting listeners
-    attachChangeToRegisterFormEventListener();
-    attachLoginEventListener();
-    attachInputValidation(jQuery);
+    // Initialize with login form
+    switchToLoginForm();
 });
