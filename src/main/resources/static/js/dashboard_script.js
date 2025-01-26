@@ -137,6 +137,8 @@ if (uuid) {
                 scrollToBottom();
             }
         });
+        // Disable autocomplete for the message input field
+        document.getElementById('message-input').setAttribute('autocomplete', 'off');
     });
 
     // Redirect to 404 if not found user
