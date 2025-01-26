@@ -1,35 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login/Register</title>
-
-  <link rel="stylesheet" th:href="@{/css/index_styles.css}">
-
-  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css}">
+	<title>SMS Login Page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css}">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" th:href="@{/icons/favicon.ico}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/iconic/css/material-design-iconic-font.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+<!--===============================================================================================-->
 </head>
 <body>
-<div class="container">
-  <div class="form-wrapper">
-    <form id="login-form">
-      <h2>Login</h2>
-      <input type="text" id="login-username" placeholder="Username" required>
-      <input type="password" id="login-password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-  <div class="form-wrapper">
-    <form id="register-form">
-      <h2>Register</h2>
-      <input type="text" id="register-username" placeholder="Username" required>
-      <input type="password" id="register-password" placeholder="Password" required>
-      <input type="password" id="register-confirm-password" placeholder="Confirm Password" required>
-      <button type="submit">Register</button>
-    </form>
-  </div>
-</div>
-<script th:src="@{/js/index_script.js}"></script>
-<script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" id="login-form">
+					<span class="login100-form-title p-b-26">
+						Welcome
+					</span>
+					<span class="login100-form-title p-b-48">
+						<i class="zmdi zmdi-cloud-outline"></i>
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
+						<input class="input100" type="text" name="email">
+						<span class="focus-input100" data-placeholder="Email"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input class="input100" type="password" name="pass">
+						<span class="focus-input100" data-placeholder="Password"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button type="submit" class="login100-form-btn">
+								Login
+							</button>
+						</div>
+					</div>
+
+					<div class="text-center p-t-50">
+						<span class="txt1">
+							Don’t have an account?
+						</span>
+
+						<a class="txt2" href="" id="signUpLink">
+							Sign Up
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/jquery-3.2.1.min.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/js/main_script.js}"></script>
+
 </body>
 </html>
