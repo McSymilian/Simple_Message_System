@@ -423,6 +423,7 @@ iframe {
 .alert-validate::before {
   content: attr(data-validate);
   position: absolute;
+  z-index: 9999;
   max-width: 70%;
   background-color: #fff;
   border: 1px solid #c80000;
@@ -453,13 +454,14 @@ iframe {
 }
 
 .alert-validate::after {
-  content: "\f06a";
+  content: "\f071";
   font-family: FontAwesome;
   font-size: 16px;
   color: #c80000;
 
   display: block;
   position: absolute;
+  z-index: 9999;
   background-color: #fff;
   top: 50%;
   -webkit-transform: translateY(-50%);

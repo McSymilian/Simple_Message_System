@@ -49,6 +49,11 @@ function attachInputValidation($) {
             if ($(input).val().trim().length < 6) {
                 return false;
             }
+        } else if ($(input).attr('name') == 'confirm-pass') {
+            const passContent = $('input[name="pass"]').val().trim();
+            if ($(input).val().trim() !== passContent) {
+                return false;
+            }
         }
         return true;
     }
@@ -174,18 +179,21 @@ document.addEventListener('DOMContentLoaded', function() {
             .addEventListener('submit', async function (event) {
                 event.preventDefault();
 
-                const username = document.getElementsByClassName('input100')[0].value;
-                const password = document.getElementsByClassName('input100')[1].value;
-                const confirm_password = document.getElementsByClassName('input100')[2].value;
+                if (window.formValidationResult) {
 
-                if (password !== confirm_password) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Registration failed',
-                        text: 'Passwords do not match',
-                    });
-                } else {
-                    await signUp(username, password);
+                    const username = document.getElementsByClassName('input100')[0].value;
+                    const password = document.getElementsByClassName('input100')[1].value;
+                    const confirm_password = document.getElementsByClassName('input100')[2].value;
+
+                    if (password !== confirm_password) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Registration failed',
+                            text: 'Passwords do not match',
+                        });
+                    } else {
+                        await signUp(username, password);
+                    }
                 }
             });
     }
