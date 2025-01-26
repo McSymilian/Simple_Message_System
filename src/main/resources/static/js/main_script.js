@@ -1,35 +1,37 @@
-
 function attachInputValidation($) {
     "use strict";
 
     // Focus view and raise label if input is not empty
     $('.input100').each(function(){
-        $(this).on('blur', function(){
+        $(this).on('blur', function (){
             if($(this).val().trim() != "") {
                 $(this).addClass('has-val');
             }
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        })
+        if($(this).val().trim() != "") {
+            $(this).addClass('has-val');
+        }
     })
-  
-  
+
     // Validate input
     var input = $('.validate-input .input100');
 
-    // $('.validate-form').on('submit',function(){
-    //     var check = true;
-    //
-    //     for(var i=0; i<input.length; i++) {
-    //         if(validate(input[i]) == false){
-    //             showValidate(input[i]);
-    //             check=false;
-    //         }
-    //     }
-    //
-    //     return check;
-    // });
+    $('.validate-form').on('submit',function(){
+        var check = true;
+
+        for(var i=0; i<input.length; i++) {
+            if(! validate(input[i])){
+                showValidate(input[i]);
+                check=false;
+            }
+        }
+        window.formValidationResult = check
+
+        return check;
+    });
 
 
     $('.validate-form .input100').each(function(){
@@ -39,16 +41,16 @@ function attachInputValidation($) {
     });
 
     function validate (input) {
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+        if($(input).attr('name') == 'email') {
+            if($(input).val().trim().match(/^([a-zA-Z0-9_\-.]+)@(([a-zA-Z0-9\-]+\.)+)([a-zA-Z]{1,5})$/) == null) {
+                return false;
+            }
+        } else if ($(input).attr('name') == 'pass') {
+            if ($(input).val().trim().length < 6) {
                 return false;
             }
         }
-        else {
-            if($(input).val().trim() == ''){
-                return false;
-            }
-        }
+        return true;
     }
 
     function showValidate(input) {
@@ -157,10 +159,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .addEventListener('submit', async function (event) {
                 event.preventDefault();
 
-                const username = document.getElementsByClassName('input100')[0].value;
-                const password = document.getElementsByClassName('input100')[1].value;
+                if (window.formValidationResult) {
+                    const username = document.getElementsByClassName('input100')[0].value;
+                    const password = document.getElementsByClassName('input100')[1].value;
 
-                await signIn(username, password);
+                    await signIn(username, password);
+                }
             });
     }
 
