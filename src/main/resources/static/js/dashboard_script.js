@@ -110,6 +110,7 @@ if (uuid) {
                 if (message.senderUUID !== uuid) {
                     const name = await getUsernameByUUID(message.senderUUID);
                     addMessage(name, message.content, getEnhancedTimestamp(message.timestamp));
+                    scrollToBottom();
                 }
             }, function(error) {
                 console.error("Subscription error: " + error);
