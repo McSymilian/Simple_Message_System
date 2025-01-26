@@ -9,4 +9,14 @@ public class WebSiteController {
     public String home() {
         return "index";
     }
+
+    @GetMapping("dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
+
+    @GetMapping("404")
+    public String notFound404() {
+        return "404";
+    }
 }

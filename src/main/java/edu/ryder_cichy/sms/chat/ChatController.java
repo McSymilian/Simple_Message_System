@@ -16,6 +16,7 @@ public class ChatController {
     @MessageMapping("/messages")
     @SendTo("/sms/chat")
     public ChatMessage sendNewMessage(ChatMessage chatMessage) {
+        System.out.println("New message: " + chatMessage.toString());
         return chatService.saveMassage(chatMessage);
     }
 
