@@ -4,7 +4,7 @@ export function attachInputValidation($) {
     // Focus view and raise label if input is not empty
     $('.input100').each(function(){
         $(this).on('blur', function (){
-            if($(this).val().trim() !== "") {
+            if($(this).val() !== "") {
                 $(this).addClass('has-val');
             }
             else {
@@ -42,21 +42,30 @@ export function attachInputValidation($) {
 
     function validate (input) {
         if($(input).attr('name') === 'username') {
-            if($(input).val().trim() === '') {
+            if($(input).val() === '') {
                 $(input).parent().attr('data-validate', 'Username is required');
                 return false;
             }
-            else if ($(input).val().trim().match(/@/)) {
-                $(input).parent().attr('data-validate', 'Don\'t use \"@\" in username');
+            else if ($(input).val().match(/@/)) {
+                $(input).parent().attr('data-validate', 'Don\'t use \"@\"');
+                return false;
+            }
+            else if ($(input).val().match(/ /)) {
+                $(input).parent().attr('data-validate', 'Don\'t use spaces');
                 return false;
             }
         } else if ($(input).attr('name') === 'pass') {
-            if ($(input).val().trim().length < 6) {
+            if ($(input).val().length < 6) {
+                $(input).parent().attr('data-validate', 'Minimum 6 characters');
+                return false;
+            } else if ($(input).val().match(/ /)) {
+                $(input).parent().attr('data-validate', 'Don\'t use spaces');
                 return false;
             }
         } else if ($(input).attr('name') === 'confirm-pass') {
             const passContent = $('input[name="pass"]').val().trim();
-            if ($(input).val().trim() !== passContent) {
+            if ($(input).val()!== passContent) {
+                $(input).parent().attr('data-validate', 'Passwords don\'t match');
                 return false;
             }
         }

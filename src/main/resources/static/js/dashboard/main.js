@@ -16,7 +16,7 @@ if (uuid) {
 
         const messageSender = document.createElement('span');
         messageSender.className = 'message-sender';
-        messageSender.textContent = sender;
+        messageSender.textContent = "@" +sender;
 
         const messageTimestamp = document.createElement('span');
         messageTimestamp.className = 'message-timestamp';
