@@ -41,8 +41,13 @@ export function attachInputValidation($) {
     });
 
     function validate (input) {
-        if($(input).attr('name') === 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-.]+)@(([a-zA-Z0-9\-]+\.)+)([a-zA-Z]{1,5})$/) == null) {
+        if($(input).attr('name') === 'username') {
+            if($(input).val().trim() === '') {
+                $(input).parent().attr('data-validate', 'Username is required');
+                return false;
+            }
+            else if ($(input).val().trim().match(/@/)) {
+                $(input).parent().attr('data-validate', 'Don\'t use \"@\" in username');
                 return false;
             }
         } else if ($(input).attr('name') === 'pass') {
