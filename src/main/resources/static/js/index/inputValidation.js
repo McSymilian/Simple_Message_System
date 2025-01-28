@@ -1,74 +1,26 @@
-export function attachInputValidation($) {
+export function attachInputFocus($) {
     "use strict";
 
     // Focus view and raise label if input is not empty
-    $('.input100').each(function(){
-        $(this).on('blur', function (){
-            if($(this).val().trim() !== "") {
+    $('.input100').each(function () {
+        $(this).on('blur', function () {
+            if ($(this).val() !== "") {
                 $(this).addClass('has-val');
-            }
-            else {
+            } else {
                 $(this).removeClass('has-val');
             }
         })
-        if($(this).val().trim() !== "") {
+        if ($(this).val().trim() !== "") {
             $(this).addClass('has-val');
         }
     })
 
-    // Validate input
-    let input = $('.validate-input .input100');
-
-    $('.validate-form').on('submit',function(){
-        let check = true;
-
-        for(let i=0; i<input.length; i++) {
-            if(! validate(input[i])){
-                showValidate(input[i]);
-                check=false;
-            }
-        }
-        window.formValidationResult = check
-
-        return check;
-    });
-
-
+    // Hide alert when focus is lost
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-            hideValidate(this);
+            hideValidateAlert(this);
         });
     });
-
-    function validate (input) {
-        if($(input).attr('name') === 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-.]+)@(([a-zA-Z0-9\-]+\.)+)([a-zA-Z]{1,5})$/) == null) {
-                return false;
-            }
-        } else if ($(input).attr('name') === 'pass') {
-            if ($(input).val().trim().length < 6) {
-                return false;
-            }
-        } else if ($(input).attr('name') === 'confirm-pass') {
-            const passContent = $('input[name="pass"]').val().trim();
-            if ($(input).val().trim() !== passContent) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function showValidate(input) {
-        let thisAlert = $(input).parent();
-
-        $(thisAlert).addClass('alert-validate');
-    }
-
-    function hideValidate(input) {
-        let thisAlert = $(input).parent();
-
-        $(thisAlert).removeClass('alert-validate');
-    }
 
     // Show or hide password
     let showPass = 0;
@@ -86,4 +38,64 @@ export function attachInputValidation($) {
             showPass = 0;
         }
     });
+}
+
+// Validate input
+export async function validateInput(){
+    let input = $('.validate-input .input100');
+
+    let correct = true;
+    for(let i=0; i<input.length; i++) {
+        if(! checkContent(input[i])){
+            showValidateAlert(input[i]);
+            correct=false;
+        }
+    }
+
+    return correct;
+}
+
+
+function checkContent (input) {
+    if($(input).attr('name') === 'username') {
+        if($(input).val() === '') {
+            $(input).parent().attr('data-validate', 'Username is required');
+            return false;
+        }
+        else if ($(input).val().match(/@/)) {
+            $(input).parent().attr('data-validate', 'Don\'t use \"@\"');
+            return false;
+        }
+        else if ($(input).val().match(/ /)) {
+            $(input).parent().attr('data-validate', 'Don\'t use spaces');
+            return false;
+        }
+    } else if ($(input).attr('name') === 'pass') {
+        if ($(input).val().length < 6) {
+            $(input).parent().attr('data-validate', 'Minimum 6 characters');
+            return false;
+        } else if ($(input).val().match(/ /)) {
+            $(input).parent().attr('data-validate', 'Don\'t use spaces');
+            return false;
+        }
+    } else if ($(input).attr('name') === 'confirm-pass') {
+        const passContent = $('input[name="pass"]').val().trim();
+        if ($(input).val()!== passContent) {
+            $(input).parent().attr('data-validate', 'Passwords don\'t match');
+            return false;
+        }
+    }
+    return true;
+}
+
+function showValidateAlert(input) {
+    let thisAlert = $(input).parent();
+
+    $(thisAlert).addClass('alert-validate');
+}
+
+function hideValidateAlert(input) {
+    let thisAlert = $(input).parent();
+
+    $(thisAlert).removeClass('alert-validate');
 }

@@ -1,6 +1,7 @@
 import {signIn} from './signIn.js';
 import {signUp} from './signUp.js';
 import {switchToRegisterForm, switchToLoginForm} from './switchForm.js';
+import {validateInput} from "./inputValidation.js";
 
 
 // Attach login event listener to submit button
@@ -9,7 +10,8 @@ export function attachLoginEventListener() {
         .addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            if (window.formValidationResult) {
+            let passedValidation = await validateInput();
+            if (passedValidation) {
                 const username = document.getElementsByClassName('input100')[0].value;
                 const password = document.getElementsByClassName('input100')[1].value;
 
@@ -25,12 +27,12 @@ export function attachRegisterEventListener() {
         .addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            if (window.formValidationResult) {
+            let passedValidation = await validateInput();
+            if (passedValidation) {
 
                 const username = document.getElementsByClassName('input100')[0].value;
                 const password = document.getElementsByClassName('input100')[1].value;
                 // const confirm_password = document.getElementsByClassName('input100')[2].value;
-
 
                 await signUp(username, password);
 
