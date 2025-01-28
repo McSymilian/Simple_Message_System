@@ -185,6 +185,7 @@ iframe {
   color: #333333;
   line-height: 1.2;
   text-align: center;
+  padding-bottom: 26px;
 }
 .login100-form-title i {
   font-size: 60px;
@@ -476,5 +477,13 @@ iframe {
   }
 }
 
+
+/*------------------------------------------------------------------
+[Switch Form Container]*/
+
+.switch-form-container {
+  text-align: center;
+    padding-top: 50px;
+}
 
 
