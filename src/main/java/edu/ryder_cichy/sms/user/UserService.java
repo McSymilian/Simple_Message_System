@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public ResponseEntity<String> register(String username, String password) {
-        if (userRepository.findByUsernameAndPassword(username, password).isPresent())
+        if (userRepository.findByUsername(username).isPresent())
             throw new UserExistsException();
 
         User registeredUser = User
