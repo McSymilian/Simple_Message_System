@@ -4,7 +4,7 @@ import {
     attachLoginEventListener,
     attachRegisterEventListener
 } from "./attachListener.js";
-import {attachInputValidation} from "./inputValidation.js";
+import {attachInputFocus} from "./inputValidation.js";
 
 
 export function switchToRegisterForm() {
@@ -30,7 +30,7 @@ function loadRegisterForm(form) {
 
             attachChangeToLoginFormEventListener();
             attachRegisterEventListener();
-            attachInputValidation(jQuery);
+            attachInputFocus(jQuery);
         }).catch(error => {
         console.error('Error during fetching register form:', error)
     });
@@ -45,7 +45,7 @@ function loadLoginForm(form) {
 
             attachChangeToRegisterFormEventListener();
             attachLoginEventListener();
-            attachInputValidation(jQuery);
+            attachInputFocus(jQuery);
         }).catch(error => {
         console.error('Error during fetching login form:', error)
     })
