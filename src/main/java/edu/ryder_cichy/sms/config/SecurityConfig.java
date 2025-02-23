@@ -14,11 +14,11 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/login", "/**").permitAll()
+                                .requestMatchers("/css/index.css", "/js/index/**", "/extraHTML/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/")
                         .permitAll()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
