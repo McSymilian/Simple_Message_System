@@ -1,30 +1,33 @@
 // Login url endpoint
-const signInUrl = 'http://localhost:6942/signIn';
+const signInUrl = 'http://localhost:6942/login';
 
 // Sign in function
 export async function signIn(username, password) {
     try {
+        const formData = new URLSearchParams();
+        formData.append("username", username);
+        formData.append("password", password);
+
         const response = await fetch(signInUrl, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: JSON.stringify({username, password}),
+            body: formData.toString(),
+            credentials: "include",  // ✅ Important: Include cookies in request
         });
 
-        if (response.ok) {
-            const data = await response.text();
-            window.location.href = `/dashboard?uuid=${data}`;
+        if (response.status === 200) {
+            window.location.href = "/dashboard"; // Redirect after successful login
         } else {
-            const errorMessage = await response.text();
+            const errorMessage = await response.json();
             Swal.fire({
-                icon: 'error',
-                title: 'Login failed',
-                text: errorMessage,
+                icon: "error",
+                title: "Login failed",
+                text: errorMessage.error,
             });
-            console.error('Login failed:', response.status, response.statusText);
         }
     } catch (error) {
-        console.error('Error during login request:', error);
+        console.error("Error during login request:", error);
     }
 }

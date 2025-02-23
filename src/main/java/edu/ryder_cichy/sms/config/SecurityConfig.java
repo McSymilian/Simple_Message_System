@@ -1,9 +1,13 @@
 package edu.ryder_cichy.sms.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
@@ -12,16 +16,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/css/index.css", "/js/index/**", "/extraHTML/**").permitAll()
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/debug/session").permitAll()
+                        .requestMatchers("/css/index.css", "/js/index/**", "/extraHTML/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/dashboard", true)
+                        .failureHandler((request, response, exception) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // ⛔ Return 401 instead of redirect
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"Invalid username or password\"}");
+                        })
                         .permitAll()
                 )
+                .sessionManagement(session -> session
+                        .maximumSessions(1) // Allow only one session per user
+                        .maxSessionsPreventsLogin(false) // Allow new logins to replace old ones
+                )
+                .csrf(csrf -> csrf.disable())  // If using API authentication, keep CSRF disabled
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .build();
+    }
+
+
+    @Bean
+    UserDetailsService userDetailsService() {
+        var tempUser = User.withUsername("user")
+                .password("{noop}password")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(tempUser);
     }
 }
