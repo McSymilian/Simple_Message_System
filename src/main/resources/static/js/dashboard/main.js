@@ -1,9 +1,10 @@
 import {getEnhancedTimestamp} from './enhancedTimestamp.js';
 
+// TODO: Remove uuid from url and use session storage
 // Extract user uuid from url
 const uuid = new URLSearchParams(window.location.search).get('uuid');
 
-if (uuid) {
+// if (uuid) {
     // Add and display message in chat
     function addMessage(sender, content, timestamp, sentByMe) {
         const messageContainer = document.getElementById('chat-messages');
@@ -123,6 +124,6 @@ if (uuid) {
     });
 
     // Redirect to 404 if not found user
-} else {
-    window.location.href = '/404';
-}
+// } else {
+//     window.location.href = '/404';
+// }
