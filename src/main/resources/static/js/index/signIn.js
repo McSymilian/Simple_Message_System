@@ -14,11 +14,11 @@ export async function signIn(username, password) {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             body: formData.toString(),
-            credentials: "include",  // ✅ Important: Include cookies in request
+            credentials: "include",
         });
 
         if (response.status === 200) {
-            window.location.href = "/dashboard"; // Redirect after successful login
+            window.location.href = "/dashboard";
         } else {
             const errorMessage = await response.json();
             Swal.fire({

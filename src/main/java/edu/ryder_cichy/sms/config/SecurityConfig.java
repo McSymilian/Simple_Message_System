@@ -26,17 +26,17 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/dashboard", true)
                         .failureHandler((request, response, exception) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // ⛔ Return 401 instead of redirect
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
                             response.getWriter().write("{\"error\": \"Invalid username or password\"}");
                         })
                         .permitAll()
                 )
                 .sessionManagement(session -> session
-                        .maximumSessions(1) // Allow only one session per user
-                        .maxSessionsPreventsLogin(false) // Allow new logins to replace old ones
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
                 )
-                .csrf(csrf -> csrf.disable())  // If using API authentication, keep CSRF disabled
+                .csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .build();
     }
