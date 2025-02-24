@@ -15,28 +15,32 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
+//        registry.addViewController("/").setViewName("index");
         registry.addViewController("/dashboard").setViewName("dashboard");
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/")
-                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
-
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("classpath:/static/css/")
-                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
-
-
-        registry.addResourceHandler("/js/**")
-                .addResourceLocations("classpath:/static/js/")
-                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
-
-
-        registry.addResourceHandler("/extraHTML/**")
-                .addResourceLocations("classpath:/static/extraHTML/")
-                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+////        registry.addResourceHandler("/static/**")
+////                .addResourceLocations("classpath:/static/")
+////                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
+////
+////        registry.addResourceHandler("/css/**")
+////                .addResourceLocations("classpath:/static/css/")
+////                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
+////
+////
+////        registry.addResourceHandler("/js/**")
+////                .addResourceLocations("classpath:/static/js/")
+////                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
+////
+////
+////        registry.addResourceHandler("/extraHTML/**")
+////                .addResourceLocations("classpath:/static/extraHTML/")
+////                .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
+////
+////        registry.addResourceHandler("/**")
+////                .addResourceLocations("classpath:/static/icons/")
+////                .setCacheControl(CacheControl.noStore());
+//    }
 }

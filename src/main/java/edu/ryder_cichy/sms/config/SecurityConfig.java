@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
@@ -44,7 +45,7 @@ public class SecurityConfig {
 
 
     @Bean
-    UserDetailsService userDetailsService() {
+    public UserDetailsManager userDetailsService() {
         var tempUser = User.withUsername("user")
                 .password("{noop}password")
                 .roles("USER")
@@ -52,4 +53,5 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(tempUser);
     }
+
 }

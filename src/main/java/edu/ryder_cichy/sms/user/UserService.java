@@ -2,12 +2,14 @@ package edu.ryder_cichy.sms.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserDetailsManager userDetailsManager;
 
     public ResponseEntity<String> login(String username, String password) {
         return ResponseEntity.ok(userRepository.findByUsernameAndPassword(username, password)
@@ -26,9 +28,9 @@ public class UserService {
                 .password(password)
                 .build();
 
-        userRepository.save(registeredUser);
+        userDetailsManager.createUser(org.springframework.security.core.userdetails.User.builder().username(username).password("{noop}"+password).build());
 
-        return ResponseEntity.ok(registeredUser.getUuid());
+        return ResponseEntity.ok(userRepository.save(registeredUser).getUuid());
     }
 
     public ResponseEntity<String> noSuchUserHandling() {
@@ -44,5 +46,11 @@ public class UserService {
                 .orElseThrow(NoSuchUserException::new)
                 .getUsername()
         );
+    }
+
+    public String getUuidByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(NoSuchUserException::new)
+                .getUuid();
     }
 }

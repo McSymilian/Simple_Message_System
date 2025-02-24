@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("signIn")
-    public ResponseEntity<String> signIn(@RequestBody UserDAO user) {
-        System.out.println("Login attempt for" + user.toString());
-        return userService.login(user.getUsername(), user.getPassword());
-    }
+//    @PostMapping("signIn")
+//    public ResponseEntity<String> signIn(@RequestBody UserDAO user) {
+//        System.out.println("Login attempt for" + user.toString());
+//        return userService.login(user.getUsername(), user.getPassword());
+//    }
 
     @PostMapping("signUp")
     public ResponseEntity<String> signUp(@RequestBody UserDAO user) {
