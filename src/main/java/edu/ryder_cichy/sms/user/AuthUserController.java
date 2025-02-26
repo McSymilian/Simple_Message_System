@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthUserController {
     private final AuthUserDetailsService authUserDetailsService;
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody AuthUser authUser){
+        return authUserDetailsService.registerUser(authUser);
+    }
+
     @ExceptionHandler(NoSuchUserException.class)
     public ResponseEntity<String> noSuchUserExceptionHandling(NoSuchUserException e) {
         return authUserDetailsService.noSuchUserHandling();
