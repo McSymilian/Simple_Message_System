@@ -6,21 +6,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-public class UserController {
-    private final UserDetailsService userDetailsService;
+public class AuthUserController {
+    private final AuthUserDetailsService authUserDetailsService;
 
     @ExceptionHandler(NoSuchUserException.class)
     public ResponseEntity<String> noSuchUserExceptionHandling(NoSuchUserException e) {
-        return userDetailsService.noSuchUserHandling();
+        return authUserDetailsService.noSuchUserHandling();
     }
 
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<String> userExistsExceptionHandling(UserExistsException e) {
-        return userDetailsService.userExistsHandling();
+        return authUserDetailsService.userExistsHandling();
     }
 
     @GetMapping("getUsername")
     public ResponseEntity<String> getUsername(@RequestParam String uuid) {
-        return userDetailsService.getUsernameByUuid(uuid);
+        return authUserDetailsService.getUsernameByUuid(uuid);
     }
 }

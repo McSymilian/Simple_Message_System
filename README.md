@@ -18,8 +18,8 @@ Code review grupy: Maksymilian Ryder i Jan Cichy.
 - projekt ma na celu obsługę wysyłania wiadomości tekstowych
 - używa on javy do obsługi logiki (backend) oraz html, js i css do obsługi strony wizualnej (frontendu)
 - kod jest podzielony na wiele plików, każdy obsługujący inną klasę/sekcję kodu.
-- 2 główne klasy to user i message
-- user dziedziczy z UserService oraz klas obsługujących wyjątki
+- 2 główne klasy to authUser i message
+- authUser dziedziczy z UserService oraz klas obsługujących wyjątki
 - z klasy typu ChatMessageDuo dziedziczą zarówno ChatMessage i Chat Controller.
 - projekt zachowuje wszystkie zasady pisania - unika redundancji kodu, używa zrozumiałyc
 ```

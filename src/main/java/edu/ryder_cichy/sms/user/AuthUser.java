@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Data
 @Document("users")
-public class User {
+public class AuthUser {
     @Id
     private String uuid;
 
