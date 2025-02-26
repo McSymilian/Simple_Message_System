@@ -1,7 +1,7 @@
 import {signIn} from './signIn.js';
 
 // Signup url endpoint
-const signUpUrl = 'http://localhost:6942/signUp';
+const signUpUrl = 'http://localhost:6942/register';
 
 // User sign up function
 export async function signUp(username, password) {

@@ -2,12 +2,28 @@ package edu.ryder_cichy.sms.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(NoSuchUserException::new);
+
+        var springUser = org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles("USER")
+                .build();
+
+        return springUser;
+    }
+
 
     public ResponseEntity<String> login(String username, String password) {
         return ResponseEntity.ok(userRepository.findByUsernameAndPassword(username, password)
@@ -15,7 +31,6 @@ public class UserService {
                 .getUuid()
         );
     }
-
     public ResponseEntity<String> register(String username, String password) {
         if (userRepository.findByUsername(username).isPresent())
             throw new UserExistsException();

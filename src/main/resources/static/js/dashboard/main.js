@@ -106,9 +106,9 @@ const uuid = new URLSearchParams(window.location.search).get('uuid');
             const input_content = document.getElementById('message-input').value;
             if (input_content) {
                 const chatMessage = {
-                    senderUUID: uuid,
+                    senderUUID: uuid, //
                     content: input_content,
-                    timestamp: new Date().toISOString()
+                    timestamp: new Date().toISOString() //
                 };
 
                 stompClient.send('/app/messages', {}, JSON.stringify(chatMessage));

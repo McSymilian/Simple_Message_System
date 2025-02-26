@@ -27,12 +27,11 @@ public class ChatService {
         messagesRepository.save(ChatMessageDAO
                 .builder()
                 .content(chatMessage.content())
-                .senderUUID(chatMessage.senderUUID())
-                .timestamp(chatMessage.timestamp())
+                .senderUUID(chatMessage.senderUUID()) // principal.getname()
+                .timestamp(chatMessage.timestamp()) // TODO localdate.now
                 .build()
         );
 
         return chatMessage;
     }
-
 }

@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ChatMessageDAO {
     @Id
     private ObjectId id;
+    // TODO remove this field
     private String senderUUID;
     private String content;
     private String timestamp;
