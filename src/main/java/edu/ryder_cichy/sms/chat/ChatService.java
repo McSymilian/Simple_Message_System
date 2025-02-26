@@ -3,6 +3,8 @@ package edu.ryder_cichy.sms.chat;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -10,12 +12,12 @@ import java.util.List;
 public class ChatService {
     private MessagesRepository messagesRepository;
 
-    public List<ChatMessage> findAllMessages() {
+    public List<ChatMessageResponse> findAllMessages() {
         return messagesRepository.findAll()
                 .stream()
                 .map(it ->
-                        new ChatMessage(
-                                it.getSenderUUID(),
+                        new ChatMessageResponse(
+                                it.getUsername(),
                                 it.getContent(),
                                 it.getTimestamp()
                                 )
@@ -23,12 +25,12 @@ public class ChatService {
                 .toList();
     }
 
-    public ChatMessage saveMassage(ChatMessage chatMessage) {
+    public ChatMessage saveMassage(ChatMessage chatMessage, Principal principal) {
         messagesRepository.save(ChatMessageDAO
                 .builder()
                 .content(chatMessage.content())
-                .senderUUID(chatMessage.senderUUID()) // principal.getname()
-                .timestamp(chatMessage.timestamp()) // TODO localdate.now
+                .username(principal.getName())
+                .timestamp(LocalDate.now().toString())
                 .build()
         );
 

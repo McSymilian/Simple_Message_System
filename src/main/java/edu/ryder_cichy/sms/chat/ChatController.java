@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -15,13 +16,13 @@ public class ChatController {
 
     @MessageMapping("/messages")
     @SendTo("/sms/chat")
-    public ChatMessage sendNewMessage(ChatMessage chatMessage) {
+    public ChatMessage sendNewMessage(ChatMessage chatMessage, Principal principal) {
         System.out.println("New message: " + chatMessage.toString());
-        return chatService.saveMassage(chatMessage);
+        return chatService.saveMassage(chatMessage, principal);
     }
 
     @GetMapping("chat_history")
-    public List<ChatMessage> getChatHistory() {
+    public List<ChatMessageResponse> getChatHistory() {
         return chatService.findAllMessages();
     }
 

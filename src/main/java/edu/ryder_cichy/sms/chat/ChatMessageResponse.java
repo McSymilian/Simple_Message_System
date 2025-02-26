@@ -1,7 +1,8 @@
 package edu.ryder_cichy.sms.chat;
 
-public class ChatMessageResponse {
-    private String senderUUID; // Username
-    private String content;
-    private String timestamp;
+public record ChatMessageResponse(
+    String username,
+    String content,
+    String timestamp
+) {
 }
