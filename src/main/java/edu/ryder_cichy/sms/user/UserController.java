@@ -9,18 +9,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserDetailsService userDetailsService;
 
-    @PostMapping("signIn")
-    public ResponseEntity<String> signIn(@RequestBody UserDAO user) {
-        System.out.println("Login attempt for" + user.toString());
-        return userDetailsService.login(user.getUsername(), user.getPassword());
-    }
-
-    @PostMapping("signUp")
-    public ResponseEntity<String> signUp(@RequestBody UserDAO user) {
-        System.out.println("Register attempt for" + user.toString());
-        return userDetailsService.register(user.getUsername(), user.getPassword());
-    }
-
     @ExceptionHandler(NoSuchUserException.class)
     public ResponseEntity<String> noSuchUserExceptionHandling(NoSuchUserException e) {
         return userDetailsService.noSuchUserHandling();

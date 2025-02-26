@@ -2,6 +2,7 @@ package edu.ryder_cichy.sms.controllers;
 
 import edu.ryder_cichy.sms.user.User;
 import edu.ryder_cichy.sms.user.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,11 @@ public class RegisterController {
     public ResponseEntity registerUser(@RequestBody User user){
         try {
             if (userRepository.findByUsername(user.getUsername()).isPresent())
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already taken. Please try again");
+                return ResponseEntity
+                        .status(HttpServletResponse.SC_CONFLICT)
+                        .body("Username already taken. Please try again");
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-
             userRepository.save(user);
 
             return ResponseEntity.ok(HttpStatus.CREATED);
