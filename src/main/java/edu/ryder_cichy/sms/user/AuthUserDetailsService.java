@@ -6,8 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 @AllArgsConstructor
@@ -18,7 +21,7 @@ public class AuthUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         AuthUser authUser = authUserRepository.findByUsername(username)
-                .orElseThrow(NoSuchUserException::new);
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return User
                 .withUsername(authUser.getUsername())
@@ -28,20 +31,17 @@ public class AuthUserDetailsService implements UserDetailsService {
     }
 
     public ResponseEntity<?> registerUser(AuthUser authUser) {
-        try {
-            if (authUserRepository.findByUsername(authUser.getUsername()).isPresent())
-                return ResponseEntity
-                        .status(HttpServletResponse.SC_CONFLICT)
-                        .body("Username already taken. Please try again");
+        authUserRepository.findByUsername(authUser.getUsername())
+                .ifPresent(user -> { throw new UserExistsException(); });
 
-            authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
-            authUserRepository.save(authUser);
+        authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
+        authUserRepository.save(authUser);
 
-            return ResponseEntity.ok(HttpServletResponse.SC_CREATED);
+        return ResponseEntity.ok(HttpServletResponse.SC_CREATED);
+    }
 
-        } catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    public ResponseEntity<String> getUsernameByPrincipal(Principal principal) {
+        return ResponseEntity.ok(principal.getName());
     }
 
     public ResponseEntity<String> noSuchUserHandling() {
@@ -50,12 +50,5 @@ public class AuthUserDetailsService implements UserDetailsService {
 
     public ResponseEntity<String> userExistsHandling() {
         return ResponseEntity.badRequest().body("Given username is already taken");
-    }
-
-    public ResponseEntity<String> getUsernameByUuid(String uuid) {
-        return ResponseEntity.ok(authUserRepository.findById(uuid)
-                .orElseThrow(NoSuchUserException::new)
-                .getUsername()
-        );
     }
 }
