@@ -30,4 +30,9 @@ public class AuthUserController {
     public ResponseEntity<String> userExistsExceptionHandling(UserExistsException e) {
         return authUserDetailsService.userExistsHandling();
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> invalidCredentialsExceptionHandling(InvalidCredentialsException e) {
+        return authUserDetailsService.invalidCredentialsHandling();
+    }
 }

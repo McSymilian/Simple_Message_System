@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -31,6 +32,14 @@ public class AuthUserDetailsService implements UserDetailsService {
     }
 
     public ResponseEntity<?> registerUser(AuthUser authUser) {
+        if (!validateLogin(authUser.getUsername())) {
+            throw new InvalidCredentialsException();
+        }
+        if (!validatePassword(authUser.getPassword())) {
+            throw new InvalidCredentialsException();
+        }
+
+
         authUserRepository.findByUsername(authUser.getUsername())
                 .ifPresent(user -> { throw new UserExistsException(); });
 
@@ -38,6 +47,16 @@ public class AuthUserDetailsService implements UserDetailsService {
         authUserRepository.save(authUser);
 
         return ResponseEntity.ok(HttpServletResponse.SC_CREATED);
+    }
+
+    private boolean validateLogin(String login) {
+        String loginRegex = "^[^\\s@]{3,20}$";
+        return Pattern.matches(loginRegex, login);
+    }
+
+    private boolean validatePassword(String password) {
+        String passwordRegex = "^\\S{6,20}$";
+        return Pattern.matches(passwordRegex, password);
     }
 
     public ResponseEntity<String> getUsernameByPrincipal(Principal principal) {
@@ -50,5 +69,12 @@ public class AuthUserDetailsService implements UserDetailsService {
 
     public ResponseEntity<String> userExistsHandling() {
         return ResponseEntity.badRequest().body("Given username is already taken");
+    }
+
+    public ResponseEntity<String> invalidCredentialsHandling() {
+        return ResponseEntity.badRequest().body(
+                "Username must be between 3 and 20 characters long and cannot contain spaces or @\n" +
+                "Password must be between 6 and 20 characters long and cannot contain spaces"
+        );
     }
 }
