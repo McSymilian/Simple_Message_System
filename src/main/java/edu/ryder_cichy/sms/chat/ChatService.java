@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -30,7 +32,7 @@ public class ChatService {
                 .builder()
                 .content(chatMessage.content())
                 .username(principal.getName())
-                .timestamp(LocalDate.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .build()
         );
 
@@ -38,7 +40,7 @@ public class ChatService {
                 .builder()
                 .content(chatMessage.content())
                 .username(principal.getName())
-                .timestamp(LocalDate.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .build();
     }
 }
