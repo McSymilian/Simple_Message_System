@@ -4,10 +4,17 @@ import {getEnhancedTimestamp} from "./enhancedTimestamp.js";
 
 // Submit and send message
 export async function sendMessage(stompClient) {
-    document.getElementsByClassName('chat-input')[0].addEventListener('submit', async function(event) {
+    let input = document.getElementsByClassName('chat-input')[0];
+    input.addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const input_content = document.getElementById('message-input').value;
+        if (!validateInput(input_content)) {
+            input.classList.add('alert-validate');
+            attachListeners(input);
+
+            return;
+        }
         if (input_content) {
             await sendMessageViaSocket(stompClient, input_content);
 
@@ -18,4 +25,17 @@ export async function sendMessage(stompClient) {
     });
 
     document.getElementById('message-input').setAttribute('autocomplete', 'off');
+}
+
+function validateInput(input_content) {
+    return !(input_content.length > 2000);
+}
+
+function attachListeners(input) {
+    input.addEventListener('change', function() {
+        input.classList.remove('alert-validate');
+    });
+    input.addEventListener('click', function() {
+        input.classList.remove('alert-validate');
+    });
 }
