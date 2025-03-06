@@ -70,9 +70,13 @@ function checkContent (input) {
             $(input).parent().attr('data-validate', 'Don\'t use spaces');
             return false;
         }
+        else if ($(input).val().length < 3 || $(input).val().length > 20) {
+            $(input).parent().attr('data-validate', 'Use 3 to 20 characters');
+            return false;
+        }
     } else if ($(input).attr('name') === 'pass') {
-        if ($(input).val().length < 6) {
-            $(input).parent().attr('data-validate', 'Minimum 6 characters');
+        if ($(input).val().length < 6 || $(input).val().length > 20) {
+            $(input).parent().attr('data-validate', 'Use 6 to 20 characters');
             return false;
         } else if ($(input).val().match(/ /)) {
             $(input).parent().attr('data-validate', 'Don\'t use spaces');
