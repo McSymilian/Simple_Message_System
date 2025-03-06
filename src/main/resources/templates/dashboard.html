@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Chat</title>
 
+<!--===============================================================================================-->
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css}">
+<!--===============================================================================================-->
+    <link rel="icon" type="image/png" th:href="@{/icons/favicon.png}"/>
+<!--===============================================================================================-->
 </head>
 <body>
 <div class="chat-container">
@@ -26,10 +29,13 @@
 <script th:src="@{https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js}"></script>
 <script th:src="@{https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js}"></script>
 <!--===============================================================================================-->
-<script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
-<!--===============================================================================================-->
 <script type="module" th:src="@{/js/dashboard/main.js}"></script>
 <script type="module" th:src="@{/js/dashboard/enhancedTimestamp.js}"></script>
+<script type="module" th:src="@{/js/dashboard/addMessage.js}"></script>
+<script type="module" th:src="@{/js/dashboard/getPrincipalUsername.js}"></script>
+<script type="module" th:src="@{/js/dashboard/fetchChatHistory.js}"></script>
+<script type="module" th:src="@{/js/dashboard/socketHandling.js}"></script>
+<script type="module" th:src="@{/js/dashboard/sendMessage.js}"></script>
 <!--===============================================================================================-->
 
 </body>
