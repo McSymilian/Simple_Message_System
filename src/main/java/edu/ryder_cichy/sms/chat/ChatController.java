@@ -1,8 +1,11 @@
 package edu.ryder_cichy.sms.chat;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,4 +28,9 @@ public class ChatController {
         return chatService.findAllMessages();
     }
 
+    @MessageExceptionHandler(NonValidMessageContentException.class)
+    @ExceptionHandler(NonValidMessageContentException.class)
+    public ResponseEntity<String> nonValidMessageContentExceptionHandling(NonValidMessageContentException e) {
+        return chatService.nonValidMessageContentHandling();
+    }
 }

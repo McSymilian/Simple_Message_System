@@ -1,12 +1,11 @@
 package edu.ryder_cichy.sms.chat;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -28,6 +27,9 @@ public class ChatService {
     }
 
     public ChatMessageResponse saveMassage(ChatMessage chatMessage, Principal principal) {
+        if (!validateMessageContent(chatMessage.content())) {
+            throw new NonValidMessageContentException();
+        }
         messagesRepository.save(ChatMessageDAO
                 .builder()
                 .content(chatMessage.content())
@@ -42,5 +44,13 @@ public class ChatService {
                 .username(principal.getName())
                 .timestamp(LocalDateTime.now().toString())
                 .build();
+    }
+
+    private boolean validateMessageContent(String content) {
+        return content != null && !content.isEmpty() && content.length() <= 2000;
+    }
+
+    public ResponseEntity<String> nonValidMessageContentHandling() {
+        return ResponseEntity.badRequest().body("Message content is not valid");
     }
 }
