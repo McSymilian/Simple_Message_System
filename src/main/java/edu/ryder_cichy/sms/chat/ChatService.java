@@ -25,7 +25,7 @@ public class ChatService {
                 .toList();
     }
 
-    public ChatMessage saveMassage(ChatMessage chatMessage, Principal principal) {
+    public ChatMessageResponse saveMassage(ChatMessage chatMessage, Principal principal) {
         messagesRepository.save(ChatMessageDAO
                 .builder()
                 .content(chatMessage.content())
@@ -34,6 +34,11 @@ public class ChatService {
                 .build()
         );
 
-        return chatMessage;
+        return ChatMessageResponse
+                .builder()
+                .content(chatMessage.content())
+                .username(principal.getName())
+                .timestamp(LocalDate.now().toString())
+                .build();
     }
 }
