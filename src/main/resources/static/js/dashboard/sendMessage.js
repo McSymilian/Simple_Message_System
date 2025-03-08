@@ -8,6 +8,8 @@ export async function sendMessage(stompClient) {
     input.addEventListener('submit', async function(event) {
         event.preventDefault();
 
+        document.getElementById('message-input').style.height = '20px';
+
         const input_content = document.getElementById('message-input').value;
         if (!validateInput(input_content)) {
             input.classList.add('alert-validate');

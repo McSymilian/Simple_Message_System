@@ -125,11 +125,16 @@ body {
     border-top: 1px solid #ddd;
 }
 
-.chat-input input {
+.chat-input textarea {
     flex: 1;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    resize: none;
+    height: 20px;
+    min-height: 20px;
+    max-height: 100px;
+    overflow-y: auto;
 }
 
 .chat-input button {
