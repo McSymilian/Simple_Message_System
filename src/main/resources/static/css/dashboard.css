@@ -23,7 +23,7 @@ body {
 }
 
 .chat-header {
-    background-color: #007bff;
+    background: linear-gradient(90deg, #21d4fd, #b721ff);;
     color: #fff;
     padding: 10px;
     display: flex;
