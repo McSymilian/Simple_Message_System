@@ -28,6 +28,8 @@ async function initPage() {
     await sendMessage(stompClient);
 }
 
+
+
 function insertUsername(username) {
     const usernameElement = document.getElementById('username-insert');
     usernameElement.textContent = "Welcome, " + username + "!";
