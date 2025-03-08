@@ -15,6 +15,9 @@ if (document.readyState !== 'loading') {
 }
 
 async function initPage() {
+    insertUsername(username);
+    addLogOutListener()
+
     await fetchChatHistory(username);
 
     const socket = new SockJS('/sms_ws');
@@ -23,4 +26,16 @@ async function initPage() {
     await connectToChatSocket(stompClient, username);
 
     await sendMessage(stompClient);
+}
+
+function insertUsername(username) {
+    const usernameElement = document.getElementById('username-insert');
+    usernameElement.textContent = "Welcome, " + username + "!";
+}
+
+function addLogOutListener() {
+    const logOutButton = document.getElementById('log-out-button');
+    logOutButton.addEventListener('click', function () {
+        window.location.href = "/logout";
+    });
 }

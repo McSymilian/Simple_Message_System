@@ -26,7 +26,44 @@ body {
     background-color: #007bff;
     color: #fff;
     padding: 10px;
+    display: flex;
+    height: 8%;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    position: relative;
+}
+
+.chat-header h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.chat-header-right {
+    position: absolute;
+    right: 0;
+    /*margin-right: 10px;*/
+    padding: 20px 20px 20px 20px;
+}
+
+.chat-header-right h2 {
+    left: 60%;
+    margin: 0;
+}
+
+.chat-header-right button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.chat-header-right button:hover {
+    background-color: #0056b3;
 }
 
 .chat-messages {
