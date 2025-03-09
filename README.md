@@ -1,16 +1,13 @@
-# Simple Message System (SMS)
+# ![favicon](https://github.com/user-attachments/assets/aff09026-2ae6-417f-b8e5-ab62d302b573) Simple Message System (SMS)
 
 SMS is a full-stack application that facilitates group chat functionality,
 allowing users to send and receive messages using their private accounts.
 The backend is built with Java and Spring Boot,
 while the frontend utilizes HTML, CSS, and JavaScript.
 
-[src/main/java/edu/ryder_cichy/sms/](./src/main/java/edu/ryder_cichy/sms/)
-[src/main/resources/application.properties](./src/main/resources/application.properties)
-
 <p>
-  <img src="https://github.com/user-attachments/assets/884ae105-d83b-4960-b799-1e4cdd32a38f" width="350"/>
-  <img src="https://github.com/user-attachments/assets/6df2caae-9a00-4e79-b37c-90c871c6a060" width="350"/>
+  <img src="https://github.com/user-attachments/assets/884ae105-d83b-4960-b799-1e4cdd32a38f" width="400"/>
+  <img src="https://github.com/user-attachments/assets/6df2caae-9a00-4e79-b37c-90c871c6a060" width="400"/>
 </p>
 
 ---
