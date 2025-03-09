@@ -21,7 +21,7 @@ export function addMessage(sender, content, timestamp, sentByMe) {
 
     const messageContent = document.createElement('div');
     messageContent.className = 'message-content';
-    messageContent.textContent = content;
+    messageContent.innerHTML = content.replace(/\n/g, '<br>');
 
     messageElement.appendChild(messageHeader);
     messageElement.appendChild(messageContent);

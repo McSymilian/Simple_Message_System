@@ -15,12 +15,16 @@
 <div class="chat-container">
     <div class="chat-header">
         <h2>Group Chat</h2>
+        <div class="chat-header-right">
+            <h2 id="username-insert">Welcome, {username}</h2>
+            <button id="log-out-button">Log out</button>
+        </div>
     </div>
     <div class="chat-messages" id="chat-messages">
         <!-- Messages will be inserted here -->
     </div>
     <form class="chat-input validate-input" data-validate="Maximum 2000 characters">
-        <input type="text" id="message-input" placeholder="Type your message...">
+        <textarea id="message-input" placeholder="Type your message..."></textarea>
         <button type="submit" id="send-button">Send</button>
     </form>
 </div>

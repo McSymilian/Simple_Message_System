@@ -8,13 +8,16 @@ export async function sendMessage(stompClient) {
     input.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        const input_content = document.getElementById('message-input').value;
+        const input_content = document.getElementById('message-input').value.trim();
         if (!validateInput(input_content)) {
             input.classList.add('alert-validate');
             attachListeners(input);
 
             return;
         }
+
+        document.getElementById('message-input').style.height = '20px';
+
         if (input_content) {
             await sendMessageViaSocket(stompClient, input_content);
 
@@ -28,7 +31,7 @@ export async function sendMessage(stompClient) {
 }
 
 function validateInput(input_content) {
-    return !(input_content.length > 2000);
+    return !(input_content.length > 2000 || input_content.length === 0);
 }
 
 function attachListeners(input) {
