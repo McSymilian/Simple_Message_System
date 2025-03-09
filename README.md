@@ -9,8 +9,8 @@ while the frontend utilizes HTML, CSS, and JavaScript.
 [src/main/resources/application.properties](./src/main/resources/application.properties)
 
 <p>
-  <img src="https://github.com/user-attachments/assets/884ae105-d83b-4960-b799-1e4cdd32a38f" width="500"/>
-  <img src="https://github.com/user-attachments/assets/6df2caae-9a00-4e79-b37c-90c871c6a060" width="500"/>
+  <img src="https://github.com/user-attachments/assets/884ae105-d83b-4960-b799-1e4cdd32a38f" width="350"/>
+  <img src="https://github.com/user-attachments/assets/6df2caae-9a00-4e79-b37c-90c871c6a060" width="350"/>
 </p>
 
 ---
