@@ -30,8 +30,8 @@ while the frontend utilizes HTML, CSS, and JavaScript.
 - ### **Api endpoints**:
 
     Authentication Endpoints
-  - **POST** `/auth/register`: Registers a new user.
-  - **POST** `/auth/login`: Authenticates a user and returns a JWT token.
+  - **POST** `/register`: Registers a new user.
+  - **POST** `/login`: Authenticates a user and returns a JWT token.
 
   Chat Endpoints
     - **POST** `/app/messages`: Sends a new chat message.
